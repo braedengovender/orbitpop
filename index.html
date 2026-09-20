@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>orbit pop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340..680;1,9..144,340..680&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <div class="brand-block">
+      <span class="brand">orbit pop</span>
+    </div>
+    <a class="how" href="#how">how it works</a>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="glow"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1>not everyone<br><em>orbits</em> back.</h1>
+        <p class="lede">upload your instagram export and see exactly who doesn't follow you back - pop them! plus, everything runs in your browser so nothing is sent or saved anywhere :)</p>
+
+        <div class="intake" id="uploadBox">
+          <h2>drop your export ZIP</h2>
+          <p class="hint">or select it manually</p>
+          <div class="row-inline">
+            <label for="fileInput" class="intake-button">choose file</label>
+          </div>
+          <input type="file" id="fileInput" accept=".zip" multiple>
+          <small>processed locally · no login required</small>
+        </div>
+
+        <p id="status"></p>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="200" r="150" fill="none" stroke="var(--hairline)" stroke-width="1"/>
+          <circle cx="200" cy="200" r="105" fill="none" stroke="var(--hairline)" stroke-width="1"/>
+          <circle cx="200" cy="200" r="60" fill="none" stroke="var(--accent-2)" stroke-width="1.2" opacity="0.6"/>
+          <circle cx="200" cy="200" r="5" fill="var(--ink)"/>
+
+          <g class="orbit-spin">
+            <circle cx="350" cy="200" r="4.5" fill="var(--ink-soft)"/>
+            <circle cx="122" cy="303" r="4.5" fill="var(--ink-soft)"/>
+            <circle cx="122" cy="97" r="4.5" fill="var(--ink-soft)"/>
+            <circle cx="272" cy="313" r="4.5" fill="var(--ink-soft)"/>
+          </g>
+
+          <g class="orbit-spin-rev">
+            <circle cx="200" cy="95" r="4.5" fill="var(--ink-soft)"/>
+            <circle cx="305" cy="270" r="4.5" fill="var(--ink-soft)"/>
+            <circle cx="95" cy="270" r="4.5" fill="var(--ink-soft)"/>
+          </g>
+
+          <g>
+            <path d="M 200 140 A 60 60 0 0 1 251 230" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.8"/>
+            <circle cx="251" cy="230" r="5.5" fill="var(--accent)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="results" class="hidden">
+    <div class="wrap">
+      <div class="stat-row">
+        <div class="stat">
+          <span id="followersCount">0</span>
+          <p>followers</p>
+        </div>
+        <div class="stat">
+          <span id="followingCount">0</span>
+          <p>following</p>
+        </div>
+        <div class="stat flag">
+          <span id="notFollowingBackCount">0</span>
+          <p>don't follow back</p>
+        </div>
+        <div class="stat">
+          <span id="notFollowedBackCount">0</span>
+          <p>you don't follow back</p>
+        </div>
+      </div>
+
+      <div class="ledger-head">
+        <div>
+          <h2>drifting out of orbit</h2>
+          <p>accounts you need to pop</p>
+        </div>
+        <button id="copyButton">copy usernames</button>
+      </div>
+
+      <input type="text" id="searchInput" placeholder="Search...">
+
+      <div id="userList"></div>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="wrap">
+      <h2>getting your export</h2>
+      <p class="intro">eight steps to pull the ZIP this needs - only followers and following data required.</p>
+
+      <div class="steps">
+        <div class="step"><span class="num">1</span><div><h3>open instagram settings</h3><p>go to settings and activity.</p></div></div>
+        <div class="step"><span class="num">2</span><div><h3>open accounts centre</h3><p>choose your information and permissions.</p></div></div>
+        <div class="step"><span class="num">3</span><div><h3>start an export</h3><p>select export your information, then create export.</p></div></div>
+        <div class="step"><span class="num">4</span><div><h3>export to device</h3><p>pick this as your export destination.</p></div></div>
+        <div class="step"><span class="num">5</span><div><h3>narrow the selection</h3><p>deselect everything except followers and following.</p></div></div>
+        <div class="step"><span class="num">6</span><div><h3>set the format</h3><p>date range: all time. format: JSON. media quality: low.</p></div></div>
+        <div class="step"><span class="num">7</span><div><h3>wait for the export</h3><p>instagram emails you once it's ready - it can take a while.</p></div></div>
+        <div class="step"><span class="num">8</span><div><h3>download and submit</h3><p>drop the ZIP into the box above - no need to unzip it.</p></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+    <p>inspired by 'orbit pop' by aespa</p>
+    <p>built by braeden govender</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
