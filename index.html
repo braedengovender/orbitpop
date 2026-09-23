@@ -4,11 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>orbit pop</title>
-<link rel="icon" type="image/png" href="favicon.png">
+<meta name="description" content="See who doesn't follow you back on Instagram — spot mutuals, sort and filter by date, compare exports to catch who's left your orbit, and check your follow-back rate. Runs entirely in your browser, nothing uploaded.">
+<meta property="og:title" content="orbit pop">
+<meta property="og:description" content="See who doesn't follow you back, track mutuals and follow-back rate, and compare snapshots over time — all processed locally in your browser.">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340..680;1,9..144,340..680&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#08060D">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
 
@@ -17,7 +26,10 @@
     <div class="brand-block">
       <span class="brand">orbit pop</span>
     </div>
-    <a class="how" href="#how">how it works</a>
+    <div class="nav-actions">
+      <button id="installButton" class="install-btn hidden" type="button">install app</button>
+      <a class="how" href="#how">how it works</a>
+    </div>
   </div>
 </nav>
 
@@ -90,24 +102,92 @@
           <span id="notFollowedBackCount">0</span>
           <p>you don't follow back</p>
         </div>
+        <div class="stat">
+          <span id="followbackRate">0%</span>
+          <p>follow-back rate</p>
+        </div>
+        <div class="stat">
+          <span id="followbackRatio">—</span>
+          <p>follower / following ratio</p>
+        </div>
       </div>
 
       <div class="ledger-head">
         <div>
-          <h2>drifting out of orbit</h2>
-          <p>accounts you need to pop</p>
+          <h2 id="ledgerTitle">drifting out of orbit</h2>
+          <p id="ledgerDesc">accounts you follow that don't follow you back - pop them, from your orbit</p>
         </div>
         <button id="copyButton">copy usernames</button>
       </div>
 
-      <input type="text" id="searchInput" placeholder="Search...">
+      <div class="tabs">
+        <button id="tab-notFollowingBack" class="tab-btn active" type="button">don't follow back</button>
+        <button id="tab-mutual" class="tab-btn" type="button">mutual</button>
+        <button id="tab-notFollowedBack" class="tab-btn" type="button">you don't follow back</button>
+      </div>
+
+      <div class="controls-row">
+        <input type="text" id="searchInput" placeholder="Search...">
+        <select id="sortSelect">
+          <option value="recent">most recently followed</option>
+          <option value="oldest">oldest followed</option>
+          <option value="az">username A–Z</option>
+          <option value="za">username Z–A</option>
+        </select>
+        <select id="filterSelect">
+          <option value="all">all time</option>
+          <option value="7">last 7 days</option>
+          <option value="30">last 30 days</option>
+          <option value="90">last 90 days</option>
+        </select>
+      </div>
+
+      <p id="excludedNote" class="hidden-note"></p>
 
       <div id="userList"></div>
     </div>
   </section>
 
+  <section id="compareSection" class="compare hidden">
+    <div class="wrap">
+      <button id="compareToggle" class="compare-toggle" type="button">compare with an older export →</button>
+
+      <div id="comparePanel" class="compare-panel hidden">
+        <p class="hint">upload an earlier followers export to see who's left your orbit since then.</p>
+        <label for="compareFileInput" class="intake-button small">choose file</label>
+        <input type="file" id="compareFileInput" accept=".zip">
+        <p id="compareStatus"></p>
+
+        <div id="compareResults" class="hidden">
+          <div class="compare-columns">
+            <div>
+              <h3>left your orbit (<span id="leftOrbitCount">0</span>)</h3>
+              <div id="leftOrbitList"></div>
+            </div>
+            <div>
+              <h3>new orbiters (<span id="newOrbitersCount">0</span>)</h3>
+              <div id="newOrbitersList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="how" id="how">
     <div class="wrap">
+      <h2>what orbit can do</h2>
+      <p class="intro">a quick tour of what's inside, then how to pull the export it needs.</p>
+
+      <div class="features">
+        <div class="feature"><span class="dot"></span><div><h3>3 orbital views</h3><p>switch between who doesn't follow you back, who's mutual, and who you haven't followed back yet.</p></div></div>
+        <div class="feature"><span class="dot"></span><div><h3>sort & filter</h3><p>order by most recently or oldest followed, or by username, and narrow to accounts followed in the last 7, 30 or 90 days.</p></div></div>
+        <div class="feature"><span class="dot"></span><div><h3>orbit-back rate & ratio</h3><p>see what share of the accounts you follow actually follow back, and your follower-to-following ratio.</p></div></div>
+        <div class="feature"><span class="dot"></span><div><h3>compare two exports</h3><p>upload an older followers export to see exactly who's left your orbit, and who's newly joined since then.</p></div></div>
+        <div class="feature"><span class="dot"></span><div><h3>never flag</h3><p>permanently mute an account from a list - handy for accounts you know just won't reciprocate.</p></div></div>
+        <div class="feature"><span class="dot"></span><div><h3>install as an app</h3><p>add orbit pop to your home screen for one-tap access, no browser tab needed.</p></div></div>
+      </div>
+
       <h2>getting your export</h2>
       <p class="intro">eight steps to pull the ZIP this needs - only followers and following data required.</p>
 
